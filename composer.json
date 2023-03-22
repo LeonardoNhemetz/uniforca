@@ -1,0 +1,17 @@
+{
+    "name": "vendor/name",
+    "type": "project",
+    "require": {
+        "twilio/sdk": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Name\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Leonardo Nhemetz"
+        }
+    ]
+}
