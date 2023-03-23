@@ -6,7 +6,6 @@ include('configDBlogin.php');
 if(isset($_COOKIE['nome'])) {
 	// Se o usuário já estiver logado, redireciona para a página de boas-vindas
 	header("Location: main.php");
-	exit();
 }
 
 // Verifica se o formulário de login foi submetido

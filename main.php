@@ -1,10 +1,12 @@
 <?php
+  ob_start();
   session_start();
   $valor = $_COOKIE['nome'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <meta charset="UTF-8">
   <title><?php echo $valor;?></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,20 +51,22 @@
 </nav>
 
 <div class="container-fluid mt-3">
-  <?php
-    // Verificar se o link "Clientes" foi clicado
-    if (isset($_GET["clientes"])) {
-      include 'CrudCliente/editar_clientes.php';
-    }if (isset($_GET["PainelDeControle"])) {
-      include 'PainelDeControle/PainelDeControle.php';
-    }if (isset($_GET["criar_alerta"])) {
-      include 'enviar_alerta/enviar_alerta.html';
-    }if (isset($_GET["LogOut"])) {
-      session_destroy();
-      setcookie('nome', "", time() - 3600);
-      header("Location: index.php");
-    }
-  ?>
+<?php
+  if (isset($_GET["LogOut"])) {
+    setcookie("nome", "", time() - 3600, "/");
+    session_unset();
+    session_destroy();         
+    header("Location: index.php");
+    exit();
+  }
+  if (isset($_GET["clientes"])) {
+    include 'CrudCliente/editar_clientes.php';
+  }if (isset($_GET["PainelDeControle"])) {
+    include 'PainelDeControle/PainelDeControle.php';
+  }if (isset($_GET["criar_alerta"])) {
+    include 'enviar_alerta/enviar_alerta.html';
+  }
+?>
 </div>
 
 
