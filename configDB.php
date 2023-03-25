@@ -1,13 +1,11 @@
 <?php
 
-/*$servername = "sql313.epizy.com";
-$username = "epiz_33820552";
-$password = "k4atccugPZC";
-$dbname = "epiz_33820552_imobiliaria_x";*/
+session_start();
+$valor = $_COOKIE['nome'];
 
 $servername = "category-app-mysql";
 $username = "root";
 $password = "root";
-$dbname = "imobiliaria_x"
+$dbname = "$valor"
 
 ?>

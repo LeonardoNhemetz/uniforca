@@ -34,8 +34,24 @@ if(isset($_POST['excluir'])) {
     $id_cliente = $_POST['id_cliente'];
     $sql = "DELETE FROM clientes WHERE id_cliente=".$id_cliente;
     if ($conn->query($sql) === TRUE) {
-        echo "Cliente excluído com sucesso";
-        header('Refresh:0');
+        $sql = "SELECT COUNT(*) AS count FROM clientes";
+        $result = $conn->query($sql);
+        // Verificar se a consulta foi bem sucedida e obter o número de clientes cadastrados na tabela
+        if ($result !== false && $result->num_rows > 0) {
+            $linha = $result->fetch_assoc();
+            $quantidade_de_clientes = $linha['count'];
+            include('configDBlogin.php');
+            $quant = intval($quantidade_de_clientes);
+            $sql = "UPDATE cadastros SET clientes_usados = $quant WHERE login_imob = '$valor' ";
+
+            if ($mysqli->query($sql) === TRUE) {
+                mysqli_close($mysqli);
+                header('Refresh:0');
+            }
+
+            
+        }
+        
     } else {
         echo "Erro ao excluir cliente: " . $conn->error;
     }
