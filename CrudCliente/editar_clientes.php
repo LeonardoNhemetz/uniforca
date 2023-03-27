@@ -98,7 +98,8 @@ if ($result->num_rows > 0) {
         <option value='email_cliente'>Email</option>
         <option value='c_a'>Comprar/Alugar</option>
         <option value='tipo_imovel'>Tipo do imóvel</option>
-        <option value='preco_incial'>Preço Inicial</option>
+        <option value='m2'>M²</option>
+        <option value='preco_inicial'>Preço Inicial</option>
         <option value='preco_final'>Preço Final</option></select>
         <input type='hidden' name='id_cliente' value='".$row["id_cliente"]."'>
         <button type='submit' value='atualizar' name='atualizar' class='btn btn-secondary btn-sm'>Atualizar</button>

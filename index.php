@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($mysqli, $_POST['password']);
 
     // Consulta o banco de dados para verificar se o usuário existe
-    $query = "SELECT login_imob,senha_imob FROM cadastros WHERE login_imob='$username' AND senha_imob='$password'";
+    $query = "SELECT login_imob,senha_imob,twilio_number FROM cadastros WHERE login_imob='$username' AND senha_imob='$password'";
     $resultado = mysqli_query($mysqli, $query);
 
     // Verifica se a consulta foi bem sucedida e se há apenas um registro
@@ -22,12 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Define uma variável de sessão com o ID do usuário
         
         $_SESSION['nome_imob'] = mysqli_fetch_assoc($resultado)['login_imob'];
-        $_SESSION['senha_imob'] = mysqli_fetch_assoc($resultado)['senha_imob'];
+        $_SESSION['twilio_number'] = mysqli_fetch_assoc($resultado)['twilio_number'];
 
         // Define um cookie para lembrar do login
         setcookie('nome', $_SESSION['nome_imob'], time()+3600*24*30);
         $user = (isset($_COOKIE['nome_imob'])) ? $_COOKIE['nome_imob'] : '';
-
+            
         // Redireciona para a página de perfil do usuário
         header("Location: main.php");
         exit();
