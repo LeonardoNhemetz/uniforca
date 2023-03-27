@@ -1,7 +1,7 @@
 <?php
 
-require_once '../vendor/autoload.php';
-use Twilio\Rest\Client;
+/*require_once '../vendor/autoload.php';
+use Twilio\Rest\Client;*/
 
 // faz a conexão com o banco de dados
 require('../configDB.php');
@@ -22,9 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $m2 = $_POST["m2"];
     $cidade = $_POST["cidade"];
     $link = $_POST['link'];
-    
 
-    $sql = "SELECT nome_cliente,telefone_cliente FROM clientes WHERE c_a LIKE '$comprarOuAlugar' AND tipo_imovel LIKE '$tipoImovel' AND m2 LIKE '$m2' AND cidade LIKE '$cidade' AND preco_inicial <= '$preco_imovel' AND preco_final >= '$preco_imovel'";
+    $sql = "INSERT INTO imoveis (tipo_imovel, c_a_imovel, corpo_msg_imovel, preco_imovel, m2_imovel, cidade_imovel, link_imovel)
+        VALUES ('$tipoImovel', '$comprarOuAlugar', '$corpoMensagem', '$preco_imovel', '$m2', '$cidade', '$link')";
+    
+    if (mysqli_query($conn, $sql)) {
+        header('Location: ../main.php?imoveis');
+    }
+    else {
+        echo "Erro ao cadastrar: " . mysqli_error($conn);	
+      } 
+    $conn->close();
+}
+
+    /*$sql = "SELECT nome_cliente,telefone_cliente FROM clientes WHERE c_a LIKE '$comprarOuAlugar' AND tipo_imovel LIKE '$tipoImovel' AND m2 LIKE '$m2' AND cidade LIKE '$cidade' AND preco_inicial <= '$preco_imovel' AND preco_final >= '$preco_imovel'";
     $result = $conn->query($sql);
 
     //Autenticação na API do Twilio
@@ -72,6 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }else{
     echo "erro";
-}
+}*/
 
 ?>

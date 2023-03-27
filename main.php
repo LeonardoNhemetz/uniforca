@@ -38,10 +38,10 @@
         <a class="nav-link text-white" href="?PainelDeControle">PainelDeControle</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link text-white" href="?clientes">Clientes</a>
+        <a class="nav-link text-white" href="?imoveis">Imóveis</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="?criar_alerta">Criar Alertas</a>
+      <li class="nav-item active">
+        <a class="nav-link text-white" href="?clientes">Clientes</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white" href="?LogOut">LogOut</a>
@@ -63,8 +63,8 @@
     include 'CrudCliente/editar_clientes.php';
   }if (isset($_GET["PainelDeControle"])) {
     include 'PainelDeControle/PainelDeControle.php';
-  }if (isset($_GET["criar_alerta"])) {
-    include 'enviar_alerta/enviar_alerta.html';
+  }if (isset($_GET["imoveis"])) {
+    include 'CrudImovel/editar_imovel.php';
   }
 ?>
 </div>
