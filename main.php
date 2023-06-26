@@ -38,10 +38,7 @@
         <a class="nav-link text-white" href="?PainelDeControle">PainelDeControle</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link text-white" href="?imoveis">Imóveis</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link text-white" href="?clientes">Clientes</a>
+        <a class="nav-link text-white" href="?integrantes">Integrantes do Bloco</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white" href="?LogOut">LogOut</a>
@@ -59,12 +56,10 @@
     header("Location: index.php");
     exit();
   }
-  if (isset($_GET["clientes"])) {
-    include 'CrudCliente/editar_clientes.php';
+  if (isset($_GET["integrantes"])) {
+    include 'CrudIntegrantes/editar_integrantes.php';
   }if (isset($_GET["PainelDeControle"])) {
     include 'PainelDeControle/PainelDeControle.php';
-  }if (isset($_GET["imoveis"])) {
-    include 'CrudImovel/editar_imovel.php';
   }
 ?>
 </div>

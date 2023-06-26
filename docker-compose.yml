@@ -16,7 +16,7 @@ services:
       volumes:
         - "./.docker/db:/var/lib/mysql"
       environment:
-        MYSQL_DATABASE: category_app
+        MYSQL_DATABASE: uniforca
         MYSQL_ROOT_PASSWORD: root
 
     category-app-phpmyadmin:

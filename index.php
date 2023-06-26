@@ -3,7 +3,7 @@ session_start();
 
 // Dados para conexão com o banco de dados
 include('configDBlogin.php');
-if(isset($_COOKIE['nome'])) {
+if(isset($_COOKIE['login_coord'])) {
 	// Se o usuário já estiver logado, redireciona para a página de boas-vindas
 	header("Location: main.php");
 }
@@ -14,19 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($mysqli, $_POST['password']);
 
     // Consulta o banco de dados para verificar se o usuário existe
-    $query = "SELECT login_imob,senha_imob,twilio_number FROM cadastros WHERE login_imob='$username' AND senha_imob='$password'";
+    $query = "SELECT login_coord, senha_coord FROM coordenadores WHERE login_coord='$username' AND senha_coord='$password'";
     $resultado = mysqli_query($mysqli, $query);
 
     // Verifica se a consulta foi bem sucedida e se há apenas um registro
     if (mysqli_num_rows($resultado) == 1) {
         // Define uma variável de sessão com o ID do usuário
         
-        $_SESSION['nome_imob'] = mysqli_fetch_assoc($resultado)['login_imob'];
-        $_SESSION['twilio_number'] = mysqli_fetch_assoc($resultado)['twilio_number'];
+        $_SESSION['login_coord'] = mysqli_fetch_assoc($resultado)['login_coord'];
 
         // Define um cookie para lembrar do login
-        setcookie('nome', $_SESSION['nome_imob'], time()+3600*24*30);
-        $user = (isset($_COOKIE['nome_imob'])) ? $_COOKIE['nome_imob'] : '';
+        setcookie('login_coord', $_SESSION['login_coord'], time()+3600*24*30);
+        $user = (isset($_COOKIE['login_coord'])) ? $_COOKIE['login_coord'] : '';
             
         // Redireciona para a página de perfil do usuário
         header("Location: main.php");

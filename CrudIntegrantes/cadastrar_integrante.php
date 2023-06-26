@@ -1,7 +1,4 @@
 <?php
-session_start();
-
-$valor = $_COOKIE['nome'];
 
 // Configurações do banco de dados
 include('../configDB.php');

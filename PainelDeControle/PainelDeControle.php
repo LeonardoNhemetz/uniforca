@@ -1,10 +1,6 @@
 <?php
 // Importa o arquivo de configuração do banco de dados
 require_once 'configDBlogin.php';
-
-$imob = $_COOKIE['nome'];
-$aa = 0;
-
 // Utiliza prepared statements para evitar injeção de SQL
 $stmt = $mysqli->prepare("SELECT login_imob, max_alertas, max_clientes, alertas_usados, clientes_usados FROM cadastros WHERE login_imob = ?");
 $stmt->bind_param('s', $imob);

@@ -8,7 +8,7 @@ $dbname = "epiz_33820552_cad_imobiliarias";*/
 $servername = "category-app-mysql";
 $username = "root";
 $password = "root";
-$dbname = "cad_imobiliarias";
+$dbname = "uniforca";
 
 $mysqli = new mysqli($servername, $username, $password, $dbname);
 
