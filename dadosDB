@@ -1,0 +1,117 @@
+CREATE TABLE Integrantes (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeCompleto VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Senha VARCHAR(64) NOT NULL,
+    DataNascimento VARCHAR(7) NOT NULL, -- Formato: MM/YYYY
+    RG VARCHAR(12) NOT NULL,
+    CPF VARCHAR(16) NOT NULL,
+    TelefoneWhatsapp VARCHAR(20),
+    PosicaoIgreja VARCHAR(15) NOT NULL,
+    EntradaUF VARCHAR(7) NOT NULL, -- Formato: MM/YYYY
+    Bloco VARCHAR(15) NOT NULL,
+	Regiao VARCHAR(30) NOT NULL,
+	Igreja VARCHAR(30) NOT NULL,
+    DataBatismoAguas VARCHAR(7) NOT NULL, -- Formato: MM/YYYY
+    EspiritoSanto BOOLEAN,
+    DataEspiritoSanto VARCHAR(7), -- Formato: MM/YYYY
+    EnderecoResidencial VARCHAR(255) NOT NULL,
+    EnderecoTrabalho VARCHAR(255),
+    NomeEmpresa VARCHAR(70),
+    HorarioEntrada TIME CHECK (HorarioEntrada REGEXP '^[0-2][0-9]:[0-5][0-9]$'),
+    HorarioSaida TIME CHECK (HorarioSaida REGEXP '^[0-2][0-9]:[0-5][0-9]$'),
+    Profissao VARCHAR(30),
+    Patente VARCHAR(10) NOT NULL,
+    UltimaPromocao VARCHAR(7) NOT NULL, -- Formato: MM/YYYY
+    Status VARCHAR(10) NOT NULL,
+    QuadroDe VARCHAR(8) NOT NULL, -- Oficiais / Praças
+    CFS BOOLEAN NOT NULL,
+    CFSgt BOOLEAN NOT NULL,
+    CFO BOOLEAN NOT NULL,
+    CFMR BOOLEAN NOT NULL,
+    UltimoCFMR VARCHAR(7) NOT NULL, -- Formato: MM/YYYY
+    CFMP BOOLEAN NOT NULL,
+    UltimoCFMP VARCHAR(7) NOT NULL -- Formato: MM/YYYY
+);
+
+-- Criação da tabela "intendência"
+CREATE TABLE Intendencia (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Intendencia VARCHAR(13), -- Sargenteante ou RH
+    Estado BOOLEAN,
+    Bloco1 VARCHAR(15),
+    Bloco2 VARCHAR(15),
+    Bloco3 VARCHAR(15),
+    Regiao1 VARCHAR(30),
+    Regiao2 VARCHAR(30),
+    Regiao3 VARCHAR(30),
+    Regiao4 VARCHAR(30),
+    Regiao5 VARCHAR(30),
+    FOREIGN KEY (ID) REFERENCES Integrantes(ID)
+);
+
+-- Criação da tabela "Flags"
+CREATE TABLE Flags (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Integrante_Penalizado INT,
+    ID_Integrante_Penalizador INT,
+    TipoDeFlag VARCHAR(9) NOT NULL, -- Amarela ou Vermelha
+    Data DATE NOT NULL, -- DD/MM/AAAA
+    Descricao TEXT,
+    FOREIGN KEY (ID_Integrante_Penalizado) REFERENCES Integrantes(ID),
+    FOREIGN KEY (ID_Integrante_Penalizador) REFERENCES Integrantes(ID)
+);
+
+
+-- Criação da tabela "PedidosDePromocao"
+CREATE TABLE PedidosDePromocao (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Integrante INT,
+    FOREIGN KEY (ID_Integrante) REFERENCES Integrantes(ID)
+);
+
+-- Tabela geral de Cursos a cadastrar
+CREATE TABLE Cursos (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Curso INT,
+    NomeDoCurso VARCHAR(100) NOT NULL,
+    Data DATE NOT NULL,
+    Hora TIME CHECK (Hora REGEXP '^[0-2][0-9]:[0-5][0-9]$') NOT NULL,
+    Endereco VARCHAR(255) NOT NULL,
+    Instrutores TEXT NOT NULL,
+    CursoPara VARCHAR(30) NOT NULL, -- Para quem será destinado o curso? (Patentes específicas, Oficiais, Praças)
+    Participantes TEXT NOT NULL,
+    FOREIGN KEY (ID_Curso) REFERENCES Cursos(ID)
+);
+
+-- Tabela de associação dos cursos (quando o integrante for se cadastrar)
+CREATE TABLE ParticipacaoCursos (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Integrante INT,
+    ID_CursoEmAberto INT,
+    FOREIGN KEY (ID_Integrante) REFERENCES Integrantes(ID),
+    FOREIGN KEY (ID_CursoEmAberto) REFERENCES Cursos(ID)
+);
+
+CREATE TABLE Eventos (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    NomeEvento VARCHAR(100) NOT NULL,
+    DataEvento DATE NOT NULL,
+    LocalEvento VARCHAR(255) NOT NULL,
+    HoraDeChegadaEvento TIME NOT NULL CHECK (HoraDeChegadaEvento BETWEEN '00:00:00' AND '23:59:59'),
+    HoraComecarEvento TIME NOT NULL CHECK (HoraComecarEvento BETWEEN '00:00:00' AND '23:59:59'),
+    HoraDoFimEvento TIME NOT NULL CHECK (HoraDoFimEvento BETWEEN '00:00:00' AND '23:59:59'),
+    HoraDeSaidaEvento TIME NOT NULL CHECK (HoraDeSaidaEvento BETWEEN '00:00:00' AND '23:59:59'),
+    ID_IntegranteCriador INT,
+    FOREIGN KEY (ID_IntegranteCriador) REFERENCES Integrantes(ID)
+);
+
+
+-- Tabela de associação de integrantes nos eventos
+CREATE TABLE ParticipacaoEvento (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Integrante INT,
+    ID_Evento INT,
+    FOREIGN KEY (ID_Integrante) REFERENCES Integrantes(ID),
+    FOREIGN KEY (ID_Evento) REFERENCES Eventos(ID)
+);
